@@ -39,9 +39,12 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  sessions Session[]
-  tokens   Token[]
-  consents Consent[]
+  sessions     Session[]
+  tokens       Token[]
+  consents     Consent[]
+  payments     Payment[]
+  entitlements Entitlement[]
+  attempts     Attempt[]
 }
 
 // Satu baris = satu sesi login. Cookie browser hanya berisi token acak,
@@ -96,4 +99,210 @@ model AccessLog {
 
   @@index([targetId])
   @@index([actorId])
+}
+
+// ============================================================================
+// Konten belajar, paket, pembayaran, hasil tes, dan kebijakan.
+// Dibuat dari kebutuhan data UI (lib/data.ts, halaman courses, tests, results,
+// packages, checkout, payment-history, admin). Draf BE1 untuk direview pemilik
+// modulnya: BE2 (paket, pembayaran), BE3 (tes, soal, percobaan), BE4 (admin, kebijakan).
+// ============================================================================
+
+enum ContentStatus {
+  DRAFT // belum ditinjau manusia, tidak tampil ke siswa
+  AKTIF
+  NONAKTIF
+}
+
+// TEST_1 = tanpa timer (Free), TEST_2 = bertimer (Premium), PRACTICE = bank soal latihan
+enum TestType {
+  TEST_1
+  TEST_2
+  PRACTICE
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELED
+  EXPIRED
+}
+
+enum AttemptStatus {
+  BERLANGSUNG
+  SELESAI
+  KEDALUWARSA // Test 2 yang waktunya habis dan dikirim otomatis oleh server
+}
+
+enum PolicyType {
+  PRIVASI
+  KETENTUAN
+}
+
+enum PolicyStatus {
+  DRAFT
+  DITINJAU
+  TERBIT
+}
+
+// Lima kategori tes. slug dipakai di URL: /courses/[slug]
+model Category {
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  judul     String
+  subjudul  String
+  ikon      String
+  warna     String
+  deskripsi String
+  urutan    Int           @default(0)
+  status    ContentStatus @default(AKTIF)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  tests Test[]
+}
+
+// Satu kategori punya tepat satu TEST_1, satu TEST_2, dan satu PRACTICE.
+// slug mengikuti URL halaman tes: /tests/[slug], mis. "logika-test-1".
+model Test {
+  id         String        @id @default(cuid())
+  categoryId String
+  category   Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  slug       String        @unique
+  tipe       TestType
+  timerDetik Int? // hanya TEST_2; batas waktu dihitung server (R04)
+  status     ContentStatus @default(AKTIF)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  questions Question[]
+  attempts  Attempt[]
+
+  @@unique([categoryId, tipe])
+}
+
+// Soal. kunciJawaban TIDAK BOLEH dikirim ke siswa sebelum waktunya.
+model Question {
+  id            String        @id @default(cuid())
+  testId        String
+  test          Test          @relation(fields: [testId], references: [id], onDelete: Cascade)
+  urutan        Int
+  teks          String
+  pilihan       Json // array string, mis. ["18","24","32","36"]
+  kunciJawaban  Int // indeks pilihan yang benar, mulai dari 0
+  penjelasan    String
+  status        ContentStatus @default(DRAFT)
+  // Jejak pembuatan soal oleh AI (risiko R01): alat, tanggal, pemeriksa manusia.
+  dibuatDengan  String?
+  diperiksaOleh String?
+  diperiksaPada DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  answers AttemptAnswer[]
+
+  @@unique([testId, urutan])
+}
+
+// Free, Single Test, Premium. id memakai kode yang sama dengan URL checkout
+// (/checkout?package=premium), jadi bukan cuid.
+model Package {
+  id          String   @id // "free" | "single" | "premium"
+  nama        String
+  harga       Int // rupiah; server yang menentukan harga, bukan klien
+  labelDurasi String // teks tampilan, mis. "Akses selama 30 hari"
+  durasiHari  Int? // null = tidak berbatas waktu / sekali beli
+  unggulan    Boolean  @default(false)
+  deskripsi   String
+  fitur       Json // array string
+  urutan      Int      @default(0)
+  aktif       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  payments     Payment[]
+  entitlements Entitlement[]
+}
+
+// Satu transaksi Midtrans. Status hanya boleh berubah lewat notifikasi
+// Midtrans yang tanda tangannya sudah diverifikasi server.
+model Payment {
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  packageId String
+  package   Package       @relation(fields: [packageId], references: [id])
+  orderId   String        @unique // dibuat server, dikirim ke Midtrans
+  jumlah    Int // harga saat transaksi dibuat (salinan, bukan acuan ke Package.harga)
+  metode    String? // "qris" | "ewallet" | "va"
+  status    PaymentStatus @default(PENDING)
+  paidAt    DateTime?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  entitlement Entitlement?
+
+  @@index([userId])
+}
+
+// Hak akses konten berbayar milik pengguna (dasar paywall). Dibuat saat Payment PAID.
+model Entitlement {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  packageId String
+  package   Package   @relation(fields: [packageId], references: [id])
+  paymentId String?   @unique
+  payment   Payment?  @relation(fields: [paymentId], references: [id])
+  testId    String? // diisi untuk paket "single": Test 2 yang dibeli
+  mulai     DateTime  @default(now())
+  berakhir  DateTime? // null = tidak berbatas
+
+  @@index([userId])
+}
+
+// Satu kali mengerjakan tes. deadlineAt dihitung server saat mulai (R04).
+model Attempt {
+  id          String        @id @default(cuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  testId      String
+  test        Test          @relation(fields: [testId], references: [id])
+  status      AttemptStatus @default(BERLANGSUNG)
+  mulaiPada   DateTime      @default(now())
+  deadlineAt  DateTime? // hanya Test 2
+  selesaiPada DateTime?
+  skor        Int? // jumlah jawaban benar, dihitung server
+  totalSoal   Int
+
+  answers AttemptAnswer[]
+
+  @@index([userId])
+  @@index([testId])
+}
+
+model AttemptAnswer {
+  id         String   @id @default(cuid())
+  attemptId  String
+  attempt    Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+  pilihan    Int // indeks pilihan yang dipilih siswa
+
+  @@unique([attemptId, questionId])
+}
+
+// Versi dokumen hukum. Consent.versi merujuk ke kolom versi di sini.
+model Policy {
+  id         String       @id @default(cuid())
+  jenis      PolicyType
+  versi      String
+  status     PolicyStatus @default(DRAFT)
+  isi        String?
+  terbitPada DateTime?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@unique([jenis, versi])
 }
