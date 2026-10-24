@@ -60,17 +60,44 @@ function subscribeLanguage(onChange: () => void) {
 const getEnglish = () => localStorage.getItem("psycourse-language") === "en";
 const getEnglishOnServer = () => false;
 
+// Teks halaman diterjemahkan dengan mengubah DOM langsung (di luar React). Kalau itu terjadi
+// sebelum React selesai menyambungkan (hydrate) halaman, React menemukan teks yang berbeda dari
+// yang ia render ("Features" padahal "Fitur") dan melempar error hydration. Jadi penerjemahan
+// pertama ditunda sampai halaman selesai dimuat dan browser idle; setelah itu langsung jalan.
+let hydrated = false;
+function afterHydration(callback: () => void): () => void {
+  if (hydrated) { callback(); return () => {}; }
+  let cancelled = false;
+  let handle: number | undefined;
+  let usedIdle = false;
+  const run = () => {
+    const fire = () => { if (cancelled) return; hydrated = true; callback(); };
+    // Safari belum punya requestIdleCallback, jadi pakai setTimeout sebagai gantinya.
+    usedIdle = typeof window.requestIdleCallback === "function";
+    handle = usedIdle ? window.requestIdleCallback(fire, { timeout: 1000 }) : window.setTimeout(fire, 300);
+  };
+  if (document.readyState === "complete") run(); else window.addEventListener("load", run, { once: true });
+  return () => {
+    cancelled = true;
+    window.removeEventListener("load", run);
+    if (handle !== undefined) { if (usedIdle) window.cancelIdleCallback(handle); else window.clearTimeout(handle); }
+  };
+}
+
 export default function LanguageSwitcher() {
   const english = useSyncExternalStore(subscribeLanguage, getEnglish, getEnglishOnServer);
   useEffect(() => {
-    document.documentElement.lang = english ? "en" : "id";
-    translateTree(document.body, english);
-    if (!english) return;
-    const observer = new MutationObserver(records => {
-      records.forEach(record => record.addedNodes.forEach(node => translateTree(node, true)));
+    let observer: MutationObserver | undefined;
+    const cancel = afterHydration(() => {
+      document.documentElement.lang = english ? "en" : "id";
+      translateTree(document.body, english);
+      if (!english) return;
+      observer = new MutationObserver(records => {
+        records.forEach(record => record.addedNodes.forEach(node => translateTree(node, true)));
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
     });
-    observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
+    return () => { cancel(); observer?.disconnect(); };
   }, [english]);
   function toggle() {
     localStorage.setItem("psycourse-language", english ? "id" : "en");
