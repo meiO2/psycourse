@@ -35,7 +35,7 @@ Cakupan: autentikasi dan akun (`/api/auth/*`, `/api/me`). Pembayaran, kuis, dan 
 |---|---|
 | `name` | 1 sampai 100 karakter, setelah dipangkas spasi |
 | `email` | Format email valid, maksimal 254 karakter, disimpan huruf kecil |
-| `password` | Minimal 8 karakter, maksimal 128 |
+| `password` | Minimal 8 karakter, maksimal 72 byte (batas bcrypt; emoji dan huruf non-Latin memakan lebih dari 1 byte). Lebih panjang ditolak, tidak dipotong. |
 | `code` (OTP) | Tepat 6 digit angka |
 | `bahasa` | `"id"` atau `"en"` |
 
