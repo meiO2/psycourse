@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-export function Button({ children, href, variant = "primary", type = "button", onClick, className = "" }: { children: ReactNode; href?: string; variant?: "primary" | "secondary" | "outline" | "ghost" | "danger"; type?: "button" | "submit" | "reset"; onClick?: () => void; className?: string }) {
+export function Button({ children, href, variant = "primary", type = "button", onClick, className = "", disabled = false }: { children: ReactNode; href?: string; variant?: "primary" | "secondary" | "outline" | "ghost" | "danger"; type?: "button" | "submit" | "reset"; onClick?: () => void; className?: string; disabled?: boolean }) {
   const cls = `button button-${variant} ${className}`;
-  return href ? <Link className={cls} href={href}>{children}</Link> : <button className={cls} type={type} onClick={onClick}>{children}</button>;
+  return href ? <Link className={cls} href={href}>{children}</Link> : <button className={cls} type={type} onClick={onClick} disabled={disabled}>{children}</button>;
 }
 export function SectionHeading({ eyebrow, title, description, center = false }: { eyebrow?: string; title: string; description?: string; center?: boolean }) {
   return <div className={`section-heading ${center ? "center" : ""}`}>{eyebrow && <span className="eyebrow">{eyebrow}</span>}<h2>{title}</h2>{description && <p>{description}</p>}</div>;
