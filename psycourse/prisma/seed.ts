@@ -4,12 +4,14 @@
 // Aman dijalankan berulang (upsert). Tidak berisi data pribadi (PDP-06).
 // Jalankan: npx prisma db seed
 //
-// Akun contoh (siswa dan admin) belum dibuat di sini karena butuh fungsi hash
-// kata sandi dari lib/auth/. Ditambahkan setelah lib/auth/ jadi.
+// Akun demo (satu siswa, satu admin) ikut dibuat, dengan kata sandi yang di-hash seperti
+// akun asli. Kata sandinya dari SEED_DEMO_PASSWORD. Di produksi, akun demo TIDAK dibuat
+// kecuali variabel itu diisi dengan sengaja.
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, type TestType } from "../lib/generated/prisma/client";
 import { categories, packages, sampleQuestions } from "../lib/data";
+import { hashPassword } from "../lib/auth/password";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL belum diisi. Salin .env.example menjadi .env.");
@@ -25,6 +27,33 @@ const testDefs: { suffix: string; tipe: TestType; timerDetik: number | null }[] 
 
 // Harga paket gratis/sekali beli tidak berbatas waktu; Premium 30 hari (sesuai lib/data.ts)
 const durasiHari: Record<string, number | null> = { free: null, single: null, premium: 30 };
+
+const demoUsers = [
+  { email: "siswa.demo@example.com", nama: "Mei", role: "USER" as const },
+  { email: "admin.demo@example.com", nama: "Admin Demo", role: "ADMIN" as const },
+];
+
+async function seedDemoUsers() {
+  const password = process.env.SEED_DEMO_PASSWORD || (process.env.NODE_ENV === "production" ? undefined : "demo-password-123");
+  if (!password) {
+    console.log("Akun demo dilewati: SEED_DEMO_PASSWORD tidak diisi di produksi.");
+    return;
+  }
+  const passwordHash = await hashPassword(password);
+  for (const u of demoUsers) {
+    const user = await db.user.upsert({
+      where: { email: u.email },
+      update: { nama: u.nama, role: u.role, passwordHash, emailVerified: new Date() },
+      create: { email: u.email, nama: u.nama, role: u.role, passwordHash, emailVerified: new Date() },
+    });
+    if ((await db.consent.count({ where: { userId: user.id } })) === 0) {
+      await db.consent.create({ data: { userId: user.id, versi: "draft-1" } });
+    }
+  }
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`Akun demo (kata sandi: ${password}): ${demoUsers.map((u) => `${u.email} [${u.role}]`).join(", ")}`);
+  }
+}
 
 async function main() {
   for (const [i, c] of categories.entries()) {
@@ -75,6 +104,8 @@ async function main() {
       create: { testId: logikaTest1.id, urutan: i + 1, ...data },
     });
   }
+
+  await seedDemoUsers();
 
   // Sama dengan baris di halaman admin: Draft 1, perlu tinjauan
   for (const jenis of ["PRIVASI", "KETENTUAN"] as const) {

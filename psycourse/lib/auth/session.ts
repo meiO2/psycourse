@@ -48,8 +48,8 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   }
   if (!session.user.emailVerified) return null;
 
-  const { emailVerified: _emailVerified, ...user } = session.user;
-  return user;
+  const { id, nama, email, role, bahasa } = session.user;
+  return { id, nama, email, role, bahasa };
 }
 
 // Logout: hapus sesi dari database dan cookie-nya.

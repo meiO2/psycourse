@@ -17,5 +17,15 @@ services:
       timeout: 5s
       retries: 10
 
+  # Kotak surat palsu untuk lokal: menangkap semua email yang dikirim aplikasi, tanpa
+  # mengirim ke luar. Lihat emailnya di http://localhost:8025
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: psycourse-mail
+    restart: unless-stopped
+    ports:
+      - "1025:1025" # SMTP, tujuan pengiriman aplikasi
+      - "8025:8025" # tampilan web
+
 volumes:
   db-data:

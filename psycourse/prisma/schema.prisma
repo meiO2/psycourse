@@ -306,3 +306,13 @@ model Policy {
 
   @@unique([jenis, versi])
 }
+
+// Penghitung batas percobaan (SEC-08): login gagal, kirim ulang OTP, registrasi, dsb.
+// Satu baris per kunci (mis. "login:1.2.3.4:mei@example.com") dengan jendela waktu tetap.
+// Disimpan di database, bukan memori, supaya tetap benar saat aplikasi berjalan
+// di lebih dari satu instance.
+model RateLimit {
+  key         String   @id
+  hits        Int
+  windowStart DateTime
+}
