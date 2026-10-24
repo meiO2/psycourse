@@ -1,0 +1,99 @@
+// Skema database PsyCourse, bagian milik BE1: akun, sesi, OTP, privasi.
+// Tabel modul lain (pembayaran, kuis, admin) ditambah pemiliknya lewat PR yang direview BE1.
+//
+// Aturan tim: setiap tabel yang menyimpan data pengguna punya kolom userId
+// dengan onDelete: Cascade, supaya penghapusan akun (PDP-04) ikut menghapus datanya.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// OTP_VERIFIKASI_EMAIL : OTP 6 digit saat registrasi
+// OTP_RESET_PASSWORD   : OTP 6 digit saat lupa kata sandi
+// TOKEN_RESET_PASSWORD : token acak berumur pendek, diberikan setelah OTP reset benar,
+//                        dipakai halaman /reset-password
+enum TokenType {
+  OTP_VERIFIKASI_EMAIL
+  OTP_RESET_PASSWORD
+  TOKEN_RESET_PASSWORD
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String // hasil argon2/bcrypt, tidak pernah menyimpan kata sandi asli (SEC-01)
+  nama          String
+  role          Role      @default(USER)
+  emailVerified DateTime? // null = akun pending, belum boleh login
+  bahasa        String    @default("id") // "id" atau "en"
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  sessions Session[]
+  tokens   Token[]
+  consents Consent[]
+}
+
+// Satu baris = satu sesi login. Cookie browser hanya berisi token acak,
+// database menyimpan hash-nya. Sesi dihapus saat logout (SEC-11).
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// OTP dan token reset. Hanya hash yang disimpan, berlaku sekali dan ada batas waktu.
+// tokenHash sengaja TIDAK unik: OTP 6 digit bisa kebetulan sama antar pengguna.
+// Pencarian selalu lewat userId + type, bukan lewat hash saja.
+model Token {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      TokenType
+  tokenHash String
+  attempts  Int       @default(0) // jumlah salah input; hangus bila melewati batas
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId, type])
+}
+
+// Catatan persetujuan Kebijakan Privasi (PDP-02).
+model Consent {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  versi     String // versi Kebijakan Privasi yang disetujui, mis. "2026-10-v1"
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// Siapa mengakses hasil asesmen siapa (PDP-08). Tanpa relasi ke User:
+// log audit tetap ada walau akun yang bersangkutan dihapus.
+model AccessLog {
+  id        String   @id @default(cuid())
+  actorId   String // yang mengakses
+  targetId  String // pemilik hasil
+  aksi      String // "lihat", "hapus", dst.
+  createdAt DateTime @default(now())
+
+  @@index([targetId])
+  @@index([actorId])
+}
