@@ -10,3 +10,33 @@
 .language-switcher{position:fixed;right:18px;bottom:18px;z-index:80;border:1px solid #cbd9cf;background:rgba(255,255,255,.96);box-shadow:0 6px 22px rgba(20,50,30,.14);border-radius:999px;padding:10px 14px;font-size:12px;font-weight:800;color:#183b27;cursor:pointer;backdrop-filter:blur(8px)}.language-switcher span{margin-left:5px;color:#718077}
 
 .profile-link{border:1px solid var(--line);border-radius:14px;padding:5px 12px 5px 5px;background:#fff}.profile-link:hover{border-color:#a5dfba;background:#f7fcf8}
+
+/* Custom Core API Checkout & Payment Instructions */
+.payment-method-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:18px 0}
+.payment-card-option{border:1.5px solid var(--line);border-radius:16px;padding:16px;background:#fff;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:10px}
+.payment-card-option:hover{border-color:#a5dfba;background:#fbfefc}
+.payment-card-option.selected{border-color:var(--green);background:var(--green-pale);box-shadow:0 0 0 1px var(--green)}
+.payment-card-head{display:flex;align-items:center;gap:13px}
+.payment-card-head strong{font-size:15px;color:var(--ink)}
+.payment-card-head small{color:var(--muted);font-size:12px}
+.va-bank-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-top:12px;padding-top:12px;border-top:1px dashed #d5e5db}
+.va-bank-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid #d4e2d8;border-radius:10px;background:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s}
+.va-bank-item:hover{background:#effbf4;border-color:var(--green)}
+.va-bank-item.active{background:#e5f7ed;border-color:var(--green);color:var(--green-dark);font-weight:800}
+.card-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;padding-top:14px;border-top:1px dashed #d5e5db}
+.card-input-grid .col-span-2{grid-column:span 2}
+.instruction-hero{text-align:center;padding:26px 18px;background:linear-gradient(135deg,#f0fbf5,#fffdec);border-radius:20px;border:1px solid #d2eddd;margin-bottom:22px}
+.qr-code-wrapper{background:#fff;display:inline-block;padding:16px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.06);border:1px solid var(--line);margin:16px auto}
+.copy-badge-box{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#f3f8f5;border:1.5px solid #cce4d6;border-radius:14px;padding:13px 18px;margin:14px 0}
+.copy-badge-box code{font-family:monospace;font-size:20px;font-weight:800;letter-spacing:1.5px;color:#0e5831}
+.instruction-steps{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.instruction-step{display:flex;gap:13px;align-items:flex-start;font-size:13.5px;color:#35443c}
+.instruction-step-num{width:26px;height:26px;border-radius:50%;background:#e5f7ed;color:var(--green-dark);font-weight:800;font-size:12px;display:grid;place-items:center;flex-shrink:0}
+.tab-pills{display:flex;gap:6px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px;overflow-x:auto}
+.tab-pill-btn{border:0;background:none;padding:7px 14px;font-size:12.5px;font-weight:700;color:var(--muted);border-radius:8px;cursor:pointer;transition:all .15s}
+.tab-pill-btn.active{background:#e7f9ee;color:var(--green-dark)}
+.payment-status-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;padding:6px 12px;border-radius:99px;margin-bottom:12px}
+.payment-status-badge.pending{background:#fff4ce;color:#785800}
+.payment-status-badge.paid{background:#dcfce7;color:#15803d}
+.payment-status-badge.failed{background:#fee2e2;color:#b91c1c}
+

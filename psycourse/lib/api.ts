@@ -41,12 +41,18 @@ export function publicUser(user: PublicUserSource) {
 
 export const MENIT = 60 * 1000;
 
+export type RouteContext<T = Record<string, string>> = {
+  params: Promise<T>;
+};
+
 // Membungkus handler: AuthError menjadi 401/403, error lain menjadi 500 JSON umum
 // tanpa stack trace (SEC-10). Detailnya hanya masuk log server.
-export function withErrors(handler: (request: Request) => Promise<Response>) {
-  return async (request: Request): Promise<Response> => {
+export function withErrors<TContext = RouteContext>(
+  handler: (request: Request, context: TContext) => Promise<Response>,
+) {
+  return async (request: Request, context: TContext): Promise<Response> => {
     try {
-      return await handler(request);
+      return await handler(request, context);
     } catch (error) {
       if (error instanceof AuthError) return apiError(error.code, error.message, error.status);
       console.error("[api] error tak terduga:", error);
