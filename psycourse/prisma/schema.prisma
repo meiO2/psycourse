@@ -233,6 +233,7 @@ model Payment {
   user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   packageId String
   package   Package       @relation(fields: [packageId], references: [id])
+  testId    String? // Tes yang dibeli untuk paket single
   orderId   String        @unique // dibuat server, dikirim ke Midtrans
   jumlah    Int // harga saat transaksi dibuat (salinan, bukan acuan ke Package.harga)
   metode    String? // "qris" | "ewallet" | "va"

@@ -5,8 +5,14 @@ import { db } from "@/lib/db";
 
 export const GET = withErrors(async () => {
   const user = await requireUser();
-  // `akses` (paket aktif) diisi BE2 setelah modul pembayaran jadi.
-  return Response.json({ ...publicUser(user), akses: null });
+  const entitlements = await db.entitlement.findMany({
+    where: {
+      userId: user.id,
+      OR: [{ berakhir: null }, { berakhir: { gt: new Date() } }],
+    },
+    select: { packageId: true, testId: true, mulai: true, berakhir: true },
+  });
+  return Response.json({ ...publicUser(user), akses: entitlements });
 });
 
 // Email sengaja tidak bisa diubah di versi 1 (lihat kontrak API bagian 3.2).
@@ -29,5 +35,5 @@ export const PATCH = withErrors(async (request) => {
   if (Object.keys(data).length === 0) return validationError("Tidak ada data yang diubah.");
 
   const updated = await db.user.update({ where: { id: user.id }, data });
-  return Response.json({ ...publicUser(updated), akses: null });
+  return Response.json({ ...publicUser(updated), akses: [] });
 });

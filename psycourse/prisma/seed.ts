@@ -66,8 +66,8 @@ async function main() {
     for (const t of testDefs) {
       await db.test.upsert({
         where: { slug: `${c.slug}-${t.suffix}` },
-        update: { tipe: t.tipe, timerDetik: t.timerDetik },
-        create: { categoryId: category.id, slug: `${c.slug}-${t.suffix}`, tipe: t.tipe, timerDetik: t.timerDetik },
+        update: { tipe: t.tipe, timerDetik: t.timerDetik, status: "AKTIF" },
+        create: { categoryId: category.id, slug: `${c.slug}-${t.suffix}`, tipe: t.tipe, timerDetik: t.timerDetik, status: "AKTIF" },
       });
     }
   }

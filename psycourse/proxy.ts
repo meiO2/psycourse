@@ -21,6 +21,7 @@ export const config = {
     "/history",
     "/settings",
     "/checkout",
+    "/payment-result",
     "/payment-history",
     "/admin/:path+", // semua halaman admin kecuali /admin (halaman login admin)
   ],
