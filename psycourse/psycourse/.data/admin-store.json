@@ -1,0 +1,787 @@
+{
+  "courses": [
+    {
+      "id": "courses-1",
+      "values": {
+        "description": "Latihan mengenali pola, urutan, dan hubungan logis.",
+        "content": "Latihan mengenali pola, urutan, dan hubungan logis.",
+        "availableTests": "Test 1 | Test 2",
+        "practiceSections": "Practice Question Bank",
+        "title": "Logika & Pola",
+        "slug": "logika",
+        "status": "Aktif"
+      }
+    },
+    {
+      "id": "courses-2",
+      "values": {
+        "description": "Asah kemampuan memahami angka dan menyelesaikan masalah numerik.",
+        "content": "Asah kemampuan memahami angka dan menyelesaikan masalah numerik.",
+        "availableTests": "Test 1 | Test 2",
+        "practiceSections": "Practice Question Bank",
+        "title": "Penalaran Numerik",
+        "slug": "numerik",
+        "status": "Aktif"
+      }
+    },
+    {
+      "id": "courses-3",
+      "values": {
+        "description": "Uji pemahaman kata, analogi, dan hubungan bahasa.",
+        "content": "Uji pemahaman kata, analogi, dan hubungan bahasa.",
+        "availableTests": "Test 1 | Test 2",
+        "practiceSections": "Practice Question Bank",
+        "title": "Penalaran Verbal",
+        "slug": "verbal",
+        "status": "Aktif"
+      }
+    },
+    {
+      "id": "courses-4",
+      "values": {
+        "description": "Berlatih memvisualisasikan bentuk, arah, dan rotasi.",
+        "content": "Berlatih memvisualisasikan bentuk, arah, dan rotasi.",
+        "availableTests": "Test 1 | Test 2",
+        "practiceSections": "Practice Question Bank",
+        "title": "Visual & Spasial",
+        "slug": "spasial",
+        "status": "Aktif"
+      }
+    },
+    {
+      "id": "courses-5",
+      "values": {
+        "description": "Latihan menjaga fokus dan mengingat informasi.",
+        "content": "Latihan menjaga fokus dan mengingat informasi.",
+        "availableTests": "Test 1 | Test 2",
+        "practiceSections": "Practice Question Bank",
+        "title": "Memori & Konsentrasi",
+        "slug": "memori",
+        "status": "Aktif"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "id": "tests-1",
+      "values": {
+        "status": "Aktif",
+        "name": "Test 1",
+        "timer": "Tidak ada",
+        "questions": "10",
+        "pointsPerQuestion": "1",
+        "passingScore": "0"
+      }
+    },
+    {
+      "id": "tests-2",
+      "values": {
+        "status": "Aktif",
+        "name": "Test 2",
+        "timer": "10 menit",
+        "questions": "10",
+        "pointsPerQuestion": "1",
+        "passingScore": "0"
+      }
+    },
+    {
+      "id": "tests-3",
+      "values": {
+        "status": "Aktif",
+        "name": "Practice Question Bank",
+        "timer": "Tidak ada",
+        "questions": "Per kategori",
+        "pointsPerQuestion": "1",
+        "passingScore": "0"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "questions-1",
+      "values": {
+        "questionId": "Q-001",
+        "category": "Logika & Pola",
+        "question": "Perhatikan urutan berikut: 2, 4, 8, 16, ... Angka berikutnya adalah?",
+        "choices": "18 | 24 | 32 | 36",
+        "answer": "3",
+        "explanation": "Setiap angka dikalikan 2, sehingga 16 × 2 = 32.",
+        "status": "Draft"
+      }
+    },
+    {
+      "id": "questions-2",
+      "values": {
+        "questionId": "Q-002",
+        "category": "Logika & Pola",
+        "question": "Jika semua bunga adalah tanaman dan mawar adalah bunga, maka mawar adalah...",
+        "choices": "Hewan | Tanaman | Benda mati | Tidak dapat ditentukan",
+        "answer": "2",
+        "explanation": "Mawar termasuk bunga, dan semua bunga termasuk tanaman.",
+        "status": "Draft"
+      }
+    },
+    {
+      "id": "questions-3",
+      "values": {
+        "questionId": "Q-003",
+        "category": "Logika & Pola",
+        "question": "Pilih pasangan yang memiliki hubungan paling mirip: Buku : Membaca",
+        "choices": "Garpu : Makan | Sepatu : Tidur | Meja : Berlari | Pintu : Menulis",
+        "answer": "1",
+        "explanation": "Buku digunakan untuk membaca, seperti garpu digunakan untuk makan.",
+        "status": "Draft"
+      }
+    },
+    {
+      "id": "questions-4",
+      "values": {
+        "questionId": "Q-004",
+        "category": "Logika & Pola",
+        "question": "Lanjutkan pola huruf: A, C, E, G, ...",
+        "choices": "H | I | J | K",
+        "answer": "2",
+        "explanation": "Pola melompati satu huruf: A, C, E, G, I.",
+        "status": "Draft"
+      }
+    },
+    {
+      "id": "questions-5",
+      "values": {
+        "questionId": "Q-005",
+        "category": "Logika & Pola",
+        "question": "Mana yang berbeda dari kelompok ini?",
+        "choices": "Segitiga | Persegi | Lingkaran | Kubus",
+        "answer": "4",
+        "explanation": "Kubus adalah bangun ruang tiga dimensi, sedangkan yang lain bangun datar.",
+        "status": "Draft"
+      }
+    },
+    {
+      "id": "de36ab7c-f13c-49b0-b7e2-6c2b112d33ef",
+      "values": {
+        "questionId": "Q001",
+        "category": "Pola Bilangan",
+        "question": "Berapakah angka berikutnya dalam deret ini: 2, 4, 8, 16, 32, ...?",
+        "choices": "48 | 64 | 50 | 60 | 128",
+        "answer": "2",
+        "explanation": "Pola deret adalah perkalian 2 pada setiap suku berikutnya (2x2=4, 4x2=8, 8x2=16, 16x2=32, 32x2=64).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "96a8e5be-093d-4d60-b598-f1b3eaf0b923",
+      "values": {
+        "questionId": "Q002",
+        "category": "Pola Bilangan",
+        "question": "Tentukan dua angka selanjutnya dari deret: 3, 5, 9, 17, 33, ..., ...",
+        "choices": "65, 129 | 66, 130 | 64, 128 | 65, 128 | 66, 129",
+        "answer": "1",
+        "explanation": "Pola penambahan selisih berlipat ganda: +2, +4, +8, +16. Penambahan berikutnya adalah +32 (33+32 = 65) dan +64 (65+64 = 129).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "a3739529-c9c6-4742-aff2-dd716efcbe01",
+      "values": {
+        "questionId": "Q003",
+        "category": "Pola Bilangan",
+        "question": "Isilah titik-titik pada deret berikut: 100, 95, 85, 70, 50, ...",
+        "choices": "25 | 30 | 35 | 20 | 15",
+        "answer": "1",
+        "explanation": "Pola pengurangan bertingkat: -5, -10, -15, -20. Pengurangan berikutnya adalah -25 (50 - 25 = 25).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "4a28942d-aba9-4b0c-a157-69559c578515",
+      "values": {
+        "questionId": "Q004",
+        "category": "Pola Bilangan",
+        "question": "Berapakah nilai X dan Y pada deret Fibonacci: 2, 3, 5, 8, 13, X, Y?",
+        "choices": "21, 34 | 20, 33 | 21, 35 | 18, 29 | 22, 36",
+        "answer": "1",
+        "explanation": "Suku berikutnya merupakan jumlah dua suku sebelumnya: 8+13=21 (X) dan 13+21=34 (Y).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "1942e73e-6d93-4f35-b626-054899b5718a",
+      "values": {
+        "questionId": "Q005",
+        "category": "Pola Abjad",
+        "question": "Lanjutkan deret abjad berikut: A, C, E, G, I, ...",
+        "choices": "J | K | L | M | H",
+        "answer": "2",
+        "explanation": "Pola melompati satu huruf (A (+2) -> C (+2) -> E (+2) -> G (+2) -> I (+2) -> K).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "191ebd9b-cedd-43f2-88b9-a683c170dc67",
+      "values": {
+        "questionId": "Q006",
+        "category": "Pola Bilangan",
+        "question": "Berapakah angka selanjutnya: 1, 4, 9, 16, 25, 36, ...?",
+        "choices": "40 | 45 | 49 | 50 | 64",
+        "answer": "3",
+        "explanation": "Pola merupakan hasil kuadrat bilangan asli berurutan: 1^2, 2^2, 3^2, 4^2, 5^2, 6^2, 7^2 = 49.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "a9887ae0-5eff-4621-b4a3-5fde307c670b",
+      "values": {
+        "questionId": "Q007",
+        "category": "Pola Bilangan",
+        "question": "Tentukan suku berikutnya: 5, 10, 8, 16, 14, 28, ...",
+        "choices": "26 | 30 | 32 | 24 | 56",
+        "answer": "1",
+        "explanation": "Pola berulang: dikali 2 kemudian dikurangi 2 (5x2=10, 10-2=8, 8x2=16, 16-2=14, 14x2=28, 28-2=26).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "465c01ad-8fdf-488b-960c-92820a2f34f2",
+      "values": {
+        "questionId": "Q008",
+        "category": "Pola Bilangan",
+        "question": "Isi angka yang kosong dari deret geometri: 81, 27, 9, 3, ...",
+        "choices": "1 | 0 | -3 | 1/3 | 2",
+        "answer": "1",
+        "explanation": "Pola adalah pembagian dengan 3 pada setiap suku berikutnya (81/3=27, 27/3=9, 9/3=3, 3/3=1).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "c4a3625a-0ec7-444c-97f0-ec3dcdcd394b",
+      "values": {
+        "questionId": "Q009",
+        "category": "Pola Bilangan",
+        "question": "Berapakah nilai selanjutnya dari deret bertingkat: 1, 2, 4, 7, 11, 16, ...?",
+        "choices": "20 | 21 | 22 | 23 | 24",
+        "answer": "3",
+        "explanation": "Pola penambahan bertingkat konsisten (+1, +2, +3, +4, +5). Penambahan selanjutnya adalah +6 (16 + 6 = 22).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "98fd67a5-7e97-41c9-8d5f-69ba26e0f8d7",
+      "values": {
+        "questionId": "Q010",
+        "category": "Pola Abjad",
+        "question": "Lanjutkan deret huruf berikut: Z, Y, X, W, V, ...",
+        "choices": "U | T | S | R | Q",
+        "answer": "1",
+        "explanation": "Pola urutan abjad mundur satu per satu dari Z menuju A.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "208b5780-1564-4d3c-89cd-892ee29ec962",
+      "values": {
+        "questionId": "Q011",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Semua mamalia bernapas dengan paru-paru.\nPremis 2: Paus adalah mamalia.\nKesimpulan yang sah adalah...",
+        "choices": "Paus bernapas dengan paru-paru | Paus bernapas dengan insang | Sebagian mamalia bukan paus | Semua yang bernapas dengan paru-paru adalah paus | Paus tidak bernapas",
+        "answer": "1",
+        "explanation": "Menggunakan Modus Ponens: Semua mamalia menggunakan paru-paru, karena Paus mamalia maka Paus bernapas dengan paru-paru.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "5e5b0586-ebd3-4e6c-a657-5594cc9ab2f8",
+      "values": {
+        "questionId": "Q012",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Jika hari hujan, maka jalanan basah.\nPremis 2: Jalanan tidak basah.\nKesimpulan yang sah adalah...",
+        "choices": "Hari hujan | Hari tidak hujan | Jalanan licin | Hari mendung | Tidak dapat disimpulkan",
+        "answer": "2",
+        "explanation": "Menggunakan Modus Tollens: Jika P maka Q. Tidak Q terjadi, maka kesimpulannya tidak P (Hari tidak hujan).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "bb733191-2acb-45b4-ac2b-c9e419c2e33f",
+      "values": {
+        "questionId": "Q013",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Semua siswa kelas 12 mengikuti ujian akhir.\nPremis 2: Budi tidak mengikuti ujian akhir.\nKesimpulan yang benar adalah...",
+        "choices": "Budi adalah siswa kelas 12 | Budi bukan siswa kelas 12 | Budi siswa kelas 11 | Budi tidak lulus | Semua siswa lulus ujian",
+        "answer": "2",
+        "explanation": "Karena seluruh siswa kelas 12 wajib ujian akhir, maka seseorang yang tidak ujian pasti bukan siswa kelas 12.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "e2761d0d-55bc-4b6d-8336-c2c0a340b4c5",
+      "values": {
+        "questionId": "Q014",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Beberapa tanaman berbunga indah.\nPremis 2: Semua tanaman membutuhkan air.\nKesimpulan yang paling tepat adalah...",
+        "choices": "Beberapa yang membutuhkan air adalah tanaman berbunga indah | Semua tanaman berbunga indah | Beberapa tanaman tidak butuh air | Tanaman indah tidak butuh air | Semua berbunga indah membutuhkan air",
+        "answer": "1",
+        "explanation": "Gabungan partikular (beberapa) dan universal (semua): sebagian dari yang butuh air adalah tanaman berbunga indah.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "fd7e4051-65b2-4775-ac64-5f3ca8f53bce",
+      "values": {
+        "questionId": "Q015",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Jika lampu merah menyala, maka kendaraan harus berhenti.\nPremis 2: Lampu merah menyala.\nKesimpulan:",
+        "choices": "Kendaraan boleh berjalan | Kendaraan harus berhenti | Kendaraan berbelok | Lampu mati | Kendaraan melaju cepat",
+        "answer": "2",
+        "explanation": "Modus Ponens baku: P menyimplikasikan Q. P terjadi, maka Q pasti terjadi.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "f416df16-d314-4e26-9af4-793f0951ca66",
+      "values": {
+        "questionId": "Q016",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Semua unggas bertelur.\nPremis 2: Ayam adalah unggas.\nKesimpulan:",
+        "choices": "Ayam bertelur | Ayam tidak bertelur | Semua yang bertelur adalah ayam | Ayam beranak | Unggas adalah ayam",
+        "answer": "1",
+        "explanation": "Ayam tergolong dalam kelas unggas, sehingga otomatis memiliki sifat universal unggas yaitu bertelur.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "0eca675f-e1c4-4ff9-98ec-afc9e58d8c03",
+      "values": {
+        "questionId": "Q017",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Semua anggota klub A bisa berenang.\nPremis 2: Doni bukan anggota klub A.\nKesimpulan yang tepat secara logika adalah...",
+        "choices": "Doni pasti tidak bisa berenang | Doni pasti bisa berenang | Doni belum tentu tidak bisa berenang | Doni anggota klub B | Doni tidak suka air",
+        "answer": "3",
+        "explanation": "Menolak anteseden tidak membatalkan konsekuen secara pasti. Orang di luar klub A tetap memiliki kemungkinan bisa berenang.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "df6ff5f6-f0ff-4473-ad86-cae591ec2eef",
+      "values": {
+        "questionId": "Q018",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Semua PNS menerima gaji bulanan.\nPremis 2: Pak Roni menerima gaji bulanan.\nKesimpulan:",
+        "choices": "Pak Roni adalah PNS | Pak Roni bukan PNS | Pak Roni belum tentu PNS | Pak Roni seorang pengusaha | Pak Roni tidak bekerja",
+        "answer": "3",
+        "explanation": "Kebenaran konsekuen tidak membuktikan anteseden secara mutlak (karyawan swasta juga menerima gaji bulanan).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "fc23931d-63a8-48a2-b0f3-dc0092aa17aa",
+      "values": {
+        "questionId": "Q019",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Tidak ada pemalas yang sukses.\nPremis 2: Semua juara adalah orang yang sukses.\nKesimpulan yang benar adalah...",
+        "choices": "Tidak ada juara yang pemalas | Semua juara adalah pemalas | Beberapa pemalas adalah juara | Semua pemalas sukses | Tidak ada orang sukses",
+        "answer": "1",
+        "explanation": "Karena juara pasti sukses dan pemalas tidak ada yang sukses, maka juara dan pemalas adalah dua himpunan yang terpisah sempurna.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "00dbdbab-6432-4738-89af-f5b9210f4d1f",
+      "values": {
+        "questionId": "Q020",
+        "category": "Logika Silogisme",
+        "question": "Premis 1: Jika listrik padam, maka pendingin ruangan mati.\nPremis 2: Pendingin ruangan tidak mati.\nKesimpulan:",
+        "choices": "Listrik tidak padam | Listrik padam | Ruangan terasa panas | Sakelar rusak | Listrik padam sebentar",
+        "answer": "1",
+        "explanation": "Menggunakan Modus Tollens: Jika P maka Q. Tidak Q, maka tidak P (Listrik tidak padam).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "00dfe4c1-e1e6-4288-bbf2-06987e780b67",
+      "values": {
+        "questionId": "Q021",
+        "category": "Logika Analitis",
+        "question": "Andi lebih tinggi dari Budi. Cici lebih tinggi dari Andi. Siapakah yang paling tinggi di antara mereka bertiga?",
+        "choices": "Andi | Budi | Cici | Andi dan Budi sama | Tidak bisa ditentukan",
+        "answer": "3",
+        "explanation": "Urutan tinggi badan dari terendah: Budi < Andi < Cici. Maka Cici adalah yang tertinggi.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "c7117800-b869-468e-b9ee-2e023d3a0fb4",
+      "values": {
+        "questionId": "Q022",
+        "category": "Logika Analitis",
+        "question": "Rumah A terletak di sebelah timur Rumah B. Rumah C terletak di sebelah timur Rumah A. Urutan rumah dari paling barat ke timur adalah...",
+        "choices": "A - B - C | B - A - C | C - A - B | C - B - A | B - C - A",
+        "answer": "2",
+        "explanation": "A di timur B (B -> A). C di timur A (A -> C). Urutan barat ke timur: B - A - C.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "73f3e7ff-394b-4ad7-966d-0fdfceb6241d",
+      "values": {
+        "questionId": "Q023",
+        "category": "Logika Analitis",
+        "question": "Dalam perlombaan lari, Eko finis sebelum Fani tetapi setelah Dedi. Siapakah yang finis paling awal?",
+        "choices": "Eko | Fani | Dedi | Eko dan Dedi bersamaan | Tidak cukup informasi",
+        "answer": "3",
+        "explanation": "Urutan kedatangan di garis finis: Dedi -> Eko -> Fani. Maka Dedi adalah yang paling awal.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "9a142ea7-8a07-4542-88e6-3e610eb4085a",
+      "values": {
+        "questionId": "Q024",
+        "category": "Logika Analitis",
+        "question": "Empat orang anak (A, B, C, D) antre tiket. A tepat di depan B. C berada di posisi paling belakang. D berada di antara A dan C. Siapakah yang paling depan?",
+        "choices": "A | B | C | D | Tidak ada",
+        "answer": "2",
+        "explanation": "C di paling belakang. D di antara A dan C (A - D - C). A di depan B (B - A - D - C). Urutan depan ke belakang: B, A, D, C. Terdepan = B.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "765c8514-babc-41d3-aa2b-f81d250c3db6",
+      "values": {
+        "questionId": "Q025",
+        "category": "Logika Analitis",
+        "question": "Nilai ujian Dina lebih tinggi dari nilai Maya. Nilai Maya sama dengan nilai Nina. Nilai Nina lebih tinggi dari nilai Oki. Siapakah yang meraih nilai terendah?",
+        "choices": "Dina | Maya | Nina | Oki | Dina dan Oki",
+        "answer": "4",
+        "explanation": "Urutan nilai dari tertinggi ke terendah: Dina > Maya = Nina > Oki. Peraih nilai terendah adalah Oki.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "cb03cc78-15d2-4f20-b12e-1ab85fa527c3",
+      "values": {
+        "questionId": "Q026",
+        "category": "Logika Analitis",
+        "question": "Kota P berada di utara Kota Q. Kota R berada di selatan Kota Q. Kota manakah yang berada di paling utara?",
+        "choices": "Kota P | Kota Q | Kota R | Kota P dan R | Tidak dapat ditentukan",
+        "answer": "1",
+        "explanation": "Posisi utara ke selatan: Kota P -> Kota Q -> Kota R. Kota paling utara adalah Kota P.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "216cb28d-e2d9-4d42-8463-8b215119ff18",
+      "values": {
+        "questionId": "Q027",
+        "category": "Logika Analitis",
+        "question": "Buku Merah lebih tebal dari Buku Biru. Buku Hijau lebih tipis dari Buku Biru. Manakah buku yang paling tipis?",
+        "choices": "Buku Merah | Buku Biru | Buku Hijau | Buku Merah dan Hijau | Ketiganya sama",
+        "answer": "3",
+        "explanation": "Ketebalan dari yang paling tebal: Buku Merah > Buku Biru > Buku Hijau. Buku paling tipis adalah Buku Hijau.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "e2d85b38-6771-4883-9e43-a8afeffbe828",
+      "values": {
+        "questionId": "Q028",
+        "category": "Logika Analitis",
+        "question": "Usia Rina 2 tahun lebih tua dari Siska. Siska 3 tahun lebih muda dari Tono. Jika usia Tono adalah 15 tahun, berapakah usia Rina?",
+        "choices": "12 tahun | 14 tahun | 15 tahun | 16 tahun | 17 tahun",
+        "answer": "2",
+        "explanation": "Usia Tono = 15. Usia Siska = 15 - 3 = 12 tahun. Usia Rina = 12 + 2 = 14 tahun.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "226edc32-75df-468e-9a7a-3b9cdeeaa064",
+      "values": {
+        "questionId": "Q029",
+        "category": "Logika Analitis",
+        "question": "Di sebuah rak meja, piring diletakkan di atas mangkuk. Gelas diletakkan di atas piring. Benda apakah yang terletak di posisi paling bawah?",
+        "choices": "Piring | Mangkuk | Gelas | Meja | Piring dan Gelas",
+        "answer": "2",
+        "explanation": "Urutan dari atas ke bawah: Gelas -> Piring -> Mangkuk. Benda paling bawah adalah mangkuk.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "80633a3f-d367-4dcc-80b9-e67bce9f0d28",
+      "values": {
+        "questionId": "Q030",
+        "category": "Logika Analitis",
+        "question": "Karyawan X bekerja lebih lama dari Y. Karyawan Z bekerja lebih lama dari X. Siapakah karyawan dengan masa kerja paling singkat?",
+        "choices": "Karyawan X | Karyawan Y | Karyawan Z | X dan Z | Tidak dapat ditentukan",
+        "answer": "2",
+        "explanation": "Urutan masa kerja dari terpanjang: Z > X > Y. Maka Y memiliki masa kerja paling singkat.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "581b0cec-0cd7-4f71-8e08-3c7119cb4b3e",
+      "values": {
+        "questionId": "Q031",
+        "category": "Pola Spasial",
+        "question": "Sebuah persegi diputar 90 derajat searah jarum jam sebanyak 4 kali berturut-turut. Posisi akhir persegi tersebut adalah...",
+        "choices": "Sama seperti posisi awal | Terbalik 180 derajat | Miring 45 derajat | Terbalik 90 derajat | Bergeser ke kanan",
+        "answer": "1",
+        "explanation": "Rotasi 90 derajat x 4 = 360 derajat. Putaran penuh 360 derajat mengembalikan bentuk ke posisi semula.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "d53baded-8fc2-4458-b1cb-1429533b20f3",
+      "values": {
+        "questionId": "Q032",
+        "category": "Pola Spasial",
+        "question": "Jika sebuah cermin datar diletakkan di sebelah kanan huruf 'P', bagaimanakah bentuk bayangan huruf 'P' pada cermin tersebut?",
+        "choices": "Huruf P terbalik secara horizontal (seperti q) | Huruf P tetap sama | Huruf P terbalik secara vertikal | Huruf b | Huruf d",
+        "answer": "1",
+        "explanation": "Pencerminan pada sisi samping kanan membalikkan orientasi kiri-kanan (horizontal) dari objek.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "efcb1feb-0efb-434d-a159-515f4351f9c3",
+      "values": {
+        "questionId": "Q033",
+        "category": "Pola Spasial",
+        "question": "Berapakah jumlah bidang sisi tegak dan alas pada bangun ruang kubus?",
+        "choices": "4 | 6 | 8 | 12 | 10",
+        "answer": "2",
+        "explanation": "Kubus memiliki total 6 bidang sisi berbentuk persegi kongruen (atas, bawah, depan, belakang, kiri, kanan).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "040e5570-5a5c-4d9b-8490-5653047d747d",
+      "values": {
+        "questionId": "Q034",
+        "category": "Pola Spasial",
+        "question": "Sebuah kubus memiliki panjang rusuk 3 cm. Berapakah volume kubus tersebut?",
+        "choices": "9 cm3 | 18 cm3 | 27 cm3 | 36 cm3 | 81 cm3",
+        "answer": "3",
+        "explanation": "Volume kubus = rusuk x rusuk x rusuk = 3 x 3 x 3 = 27 cm3.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "5e1465f1-9ef2-45a3-bf70-6ec60ad4da84",
+      "values": {
+        "questionId": "Q035",
+        "category": "Pola Spasial",
+        "question": "Manakah dari konfigurasi berikut yang TIDAK dapat membentuk bangun kubus saat dilipat?",
+        "choices": "Jaring-jaring pola 1-4-1 | Jaring-jaring pola 2-3-1 | 6 persegi disusun sejajar dalam 1 baris lurus | Jaring-jaring pola 2-2-2 | Jaring-jaring pola 3-3",
+        "answer": "3",
+        "explanation": "6 persegi sejajar dalam satu garis lurus tidak memiliki penutup atas/bawah sehingga gagal membentuk kubus.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "26ac8968-2ef2-4f1a-8972-336523def389",
+      "values": {
+        "questionId": "Q036",
+        "category": "Pola Spasial",
+        "question": "Sebuah jam dinding menunjukkan pukul 03.00. Berapa sudut terkecil yang dibentuk oleh jarum pendek dan jarum panjang?",
+        "choices": "45 derajat | 60 derajat | 90 derajat | 120 derajat | 180 derajat",
+        "answer": "3",
+        "explanation": "Jarum pendek di angka 3 dan jarum panjang di angka 12 membentuk sudut siku-siku (3 jam x 30 derajat = 90 derajat).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "b78fbbcb-c570-4e2b-8efa-9f2898b31934",
+      "values": {
+        "questionId": "Q037",
+        "category": "Pola Spasial",
+        "question": "Berapakah jumlah titik sudut pada bangun limas segi empat?",
+        "choices": "4 | 5 | 6 | 8 | 10",
+        "answer": "2",
+        "explanation": "Limas segi empat memiliki 4 titik sudut pada alas persegi/persegi panjang ditambah 1 titik puncak = 5 titik sudut.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "396dacf3-9f28-4ebd-bc55-cc1049d5c7aa",
+      "values": {
+        "questionId": "Q038",
+        "category": "Pola Spasial",
+        "question": "Jika jarum jam menunjukkan pukul 06.00, besar sudut yang dibentuk kedua jarum jam adalah...",
+        "choices": "90 derajat | 120 derajat | 150 derajat | 180 derajat | 360 derajat",
+        "answer": "4",
+        "explanation": "Jarum pendek menunjuk angka 6 dan jarum panjang menunjuk angka 12, membentuk garis lurus lurus bersudut 180 derajat.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "d60c813c-1a79-4ed5-b17f-3953b0fc07e3",
+      "values": {
+        "questionId": "Q039",
+        "category": "Pola Spasial",
+        "question": "Berapa banyak rusuk yang dimiliki oleh sebuah prisma segitiga?",
+        "choices": "6 | 7 | 8 | 9 | 12",
+        "answer": "4",
+        "explanation": "Prisma segitiga memiliki 3 rusuk alas, 3 rusuk atas, dan 3 rusuk tegak, total 9 rusuk.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "e6783349-0b71-4438-ae3c-1e999567cc00",
+      "values": {
+        "questionId": "Q040",
+        "category": "Pola Spasial",
+        "question": "Sebuah lembar kertas persegi dipotong diagonal utamanya dari satu sudut ke sudut seberangnya. Bangun apa yang dihasilkan?",
+        "choices": "Dua buah segitiga siku-siku sama kaki | Dua buah persegi panjang | Dua buah jajargenjang | Empat buah segitiga | Dua buah trapesium",
+        "answer": "1",
+        "explanation": "Memotong persegi secara diagonal membaginya menjadi dua segitiga siku-siku dengan dua sisi siku-siku sama panjang.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "5e8d39e8-8c74-4e3c-8822-d8ae83412ec6",
+      "values": {
+        "questionId": "Q041",
+        "category": "Analogi Kata",
+        "question": "Mobil : Bensin = Manusia : ...",
+        "choices": "Air | Makanan | Oksigen | Darah | Sepatu",
+        "answer": "2",
+        "explanation": "Hubungan bahan bakar/sumber energi utama. Mobil digerakkan bensin, manusia digerakkan makanan.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "0fccf6f2-646d-49a8-bf02-ada2742b37b7",
+      "values": {
+        "questionId": "Q042",
+        "category": "Analogi Kata",
+        "question": "Dokter : Rumah Sakit = Guru : ...",
+        "choices": "Murid | Sekolah | Papan Tulis | Buku | Kelas",
+        "answer": "2",
+        "explanation": "Hubungan profesi dan tempat bekerja resminya. Dokter bekerja di rumah sakit, guru bekerja di sekolah.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "c6f44de6-b8cd-4ef7-8c3c-3d369fc157d5",
+      "values": {
+        "questionId": "Q043",
+        "category": "Analogi Kata",
+        "question": "Sendok : Makan = Pisau : ...",
+        "choices": "Memotong | Memasak | Dapur | Tajam | Gunting",
+        "answer": "1",
+        "explanation": "Hubungan alat dan fungsi utamanya. Sendok untuk makan, pisau untuk memotong.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "d764a9ab-b425-4d01-93de-9e731cd1ab54",
+      "values": {
+        "questionId": "Q044",
+        "category": "Analogi Kata",
+        "question": "Es : Dingin = Api : ...",
+        "choices": "Asap | Panas | Merah | Kayu | Cahaya",
+        "answer": "2",
+        "explanation": "Hubungan objek dan sifat fisik utamanya. Es bersifat dingin, api bersifat panas.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "68fa9502-dfbd-4341-b8fb-55094578759a",
+      "values": {
+        "questionId": "Q045",
+        "category": "Logika Kuantitatif",
+        "question": "Jika 3 orang pekerja dapat menyelesaikan sebuah pekerjaan dalam 6 hari, berapa hari yang dibutuhkan jika dikerjakan oleh 6 orang?",
+        "choices": "2 hari | 3 hari | 4 hari | 12 hari | 18 hari",
+        "answer": "2",
+        "explanation": "Perbandingan berbalik nilai: (3 pekerja x 6 hari) / 6 pekerja = 18 / 6 = 3 hari.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "8ec966a8-4ee0-4378-a87e-85ebc6298803",
+      "values": {
+        "questionId": "Q046",
+        "category": "Pola Bilangan",
+        "question": "Berapakah nilai lanjutan dari deret: 100, 90, 81, 73, 66, ...?",
+        "choices": "60 | 59 | 58 | 57 | 61",
+        "answer": "1",
+        "explanation": "Pola pengurangan berurutan (-10, -9, -8, -7). Pengurangan berikutnya -6 (66 - 6 = 60).",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "1c072011-f3b0-4a73-be93-038fba45e978",
+      "values": {
+        "questionId": "Q049",
+        "category": "Logika Kuantitatif",
+        "question": "Harga 5 buah buku notebook adalah Rp50.000. Berapakah harga yang harus dibayar untuk 8 buah buku notebook serupa?",
+        "choices": "Rp70.000 | Rp75.000 | Rp80.000 | Rp85.000 | Rp95.000",
+        "answer": "3",
+        "explanation": "Harga 1 buku = Rp50.000 / 5 = Rp10.000. Maka 8 buku = 8 x Rp10.000 = Rp80.000.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "4c07d994-12cc-406c-8d5f-b39efeebddcf",
+      "values": {
+        "questionId": "Q048",
+        "category": "Pola Abjad",
+        "question": "Tentukan huruf berikutnya dalam deret: B, D, G, K, P, ...",
+        "choices": "T | U | V | W | X",
+        "answer": "3",
+        "explanation": "Pola penambahan selisih abjad: B (+2) -> D (+3) -> G (+4) -> K (+5) -> P (+6) -> V.",
+        "status": "Ready"
+      }
+    },
+    {
+      "id": "f563bf9e-1128-4c10-8211-a81207382165",
+      "values": {
+        "questionId": "Q049",
+        "category": "Logika Kuantitatif",
+        "question": "Harga 5 buah buku notebook adalah Rp50.000. Berapakah harga yang harus dibayar untuk 8 buah buku notebook serupa?",
+        "choices": "Rp70.000 | Rp75.000 | Rp80.000 | Rp85.000 | Rp95.000",
+        "answer": "3",
+        "explanation": "Harga 1 buku = Rp50.000 / 5 = Rp10.000. Maka 8 buku = 8 x Rp10.000 = Rp80.000.",
+        "status": "Ready"
+      }
+    }
+  ],
+  "access": [
+    {
+      "id": "access-1",
+      "values": {
+        "role": "Student",
+        "permissions": "Tes dan profil sendiri",
+        "status": "Aktif"
+      }
+    },
+    {
+      "id": "access-2",
+      "values": {
+        "role": "Admin",
+        "permissions": "Kelola konten dan akses",
+        "status": "Aktif"
+      }
+    }
+  ],
+  "policies": [
+    {
+      "id": "policies-1",
+      "values": {
+        "document": "Kebijakan Privasi",
+        "version": "Draft 1",
+        "status": "Perlu tinjauan",
+        "content": ""
+      }
+    },
+    {
+      "id": "policies-2",
+      "values": {
+        "document": "Ketentuan Layanan",
+        "version": "Draft 1",
+        "status": "Perlu tinjauan",
+        "content": ""
+      }
+    }
+  ]
+}
