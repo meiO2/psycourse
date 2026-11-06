@@ -4,7 +4,7 @@ import type { TransactionClient } from "@/lib/generated/prisma/internal/prismaNa
 import { assertQuizAccess } from "./access";
 import { QuizError } from "./domain-errors";
 import { choicesOf, toPublicQuestion } from "./question-mapper";
-import { assertAttemptCanReceiveAnswer, isPastDeadline } from "./policy";
+import { assertAttemptCanReceiveAnswer, deadlineFor, finalizationStatus, isPastDeadline } from "./policy";
 import { calculateScore } from "./scoring";
 
 type TestWithQuestions = {
@@ -114,15 +114,6 @@ async function activeTest(slug: string): Promise<TestWithQuestions> {
   return test;
 }
 
-function deadlineFor(test: TestWithQuestions, startedAt: Date): Date | null {
-  if (test.tipe !== "TEST_2") return null;
-  const timerDetik = test.timerDetik;
-  if (timerDetik === null || !Number.isInteger(timerDetik) || timerDetik <= 0) {
-    throw new QuizError("TEST_NOT_FOUND", 409, "Konfigurasi waktu tes tidak valid.");
-  }
-  return new Date(startedAt.getTime() + timerDetik * 1000);
-}
-
 export async function getTest(slug: string) {
   const test = await activeTest(slug);
   return {
@@ -145,7 +136,7 @@ export async function startAttempt(userId: string, slug: string) {
       testId: test.id,
       status: AttemptStatus.BERLANGSUNG,
       mulaiPada,
-      deadlineAt: deadlineFor(test, mulaiPada),
+      deadlineAt: deadlineFor(test.tipe, test.timerDetik, mulaiPada),
       totalSoal: test.questions.length,
     },
   });
@@ -241,10 +232,7 @@ export async function submitAttempt(userId: string, attemptId: string) {
     await lockAttempt(tx, attemptId, userId);
     const attempt = await tx.attempt.findUniqueOrThrow({ where: { id: attemptId } });
     if (attempt.status !== AttemptStatus.BERLANGSUNG) return resultOf(attempt);
-    const status =
-      isPastDeadline(attempt.deadlineAt, new Date())
-        ? AttemptStatus.KEDALUWARSA
-        : AttemptStatus.SELESAI;
+    const status = finalizationStatus(attempt.deadlineAt, new Date());
     return finalizeLockedAttempt(tx, attemptId, status);
   });
 }
