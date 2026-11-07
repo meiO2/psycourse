@@ -8,8 +8,9 @@ export class QuizError extends Error {
       | "ATTEMPT_EXPIRED"
       | "INVALID_QUESTION"
       | "INVALID_CHOICE"
-      | "ACCESS_CHECK_UNAVAILABLE",
-    public readonly status: 400 | 404 | 409 | 503,
+      | "ACCESS_CHECK_UNAVAILABLE"
+      | "TEST_ACCESS_DENIED",
+    public readonly status: 400 | 403 | 404 | 409 | 503,
     message: string,
   ) {
     super(message);

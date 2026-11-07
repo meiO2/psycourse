@@ -1,6 +1,7 @@
 import { requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { apiError, withErrors } from "@/lib/api";
+import { canAccessTest } from "@/lib/access/test-access-service";
 
 export const GET = withErrors(async (_request, context) => {
   const user = await requireUser();
@@ -11,19 +12,5 @@ export const GET = withErrors(async (_request, context) => {
   });
 
   if (!test) return apiError("TEST_NOT_FOUND", "Tes tidak ditemukan.", 404);
-  if (test.tipe === "TEST_1") return Response.json({ data: { allowed: true } });
-
-  const allowed = await db.entitlement.findFirst({
-    where: {
-      userId: user.id,
-      OR: [
-        { packageId: "premium" },
-        { packageId: "single", testId: test.id },
-      ],
-      AND: [{ OR: [{ berakhir: null }, { berakhir: { gt: new Date() } }] }],
-    },
-    select: { id: true },
-  });
-
-  return Response.json({ data: { allowed: Boolean(allowed) } });
+  return Response.json({ data: { allowed: await canAccessTest(user.id, test) } });
 });
