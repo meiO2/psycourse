@@ -193,13 +193,13 @@ export async function getAttempt(userId: string, attemptId: string) {
 
 export async function saveAnswer(userId: string, attemptId: string, questionId: string, pilihan: number) {
   if (!Number.isInteger(pilihan)) throw new QuizError("INVALID_CHOICE", 400, "Pilihan jawaban tidak valid.");
-  return db.$transaction(async (tx) => {
+  const result = await db.$transaction(async (tx) => {
     await lockAttempt(tx, attemptId, userId);
     const attempt = await tx.attempt.findUniqueOrThrow({ where: { id: attemptId } });
     assertAttemptCanReceiveAnswer(attempt.status);
     if (isPastDeadline(attempt.deadlineAt, new Date())) {
       await finalizeLockedAttempt(tx, attemptId, AttemptStatus.KEDALUWARSA);
-      throw new QuizError("ATTEMPT_EXPIRED", 409, "Waktu tes sudah habis.");
+      return { expired: true as const };
     }
     const question = await tx.question.findFirst({
       where: { id: questionId, testId: attempt.testId, status: "AKTIF" },
@@ -215,6 +215,8 @@ export async function saveAnswer(userId: string, attemptId: string, questionId: 
     });
     return { saved: true, questionId, pilihan };
   });
+  if ("expired" in result) throw new QuizError("ATTEMPT_EXPIRED", 409, "Waktu tes sudah habis.");
+  return result;
 }
 
 export async function expireAttempt(userId: string, attemptId: string) {
