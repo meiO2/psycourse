@@ -12,6 +12,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, type TestType } from "../lib/generated/prisma/client";
 import { categories, packages, sampleQuestions } from "../lib/data";
 import { hashPassword } from "../lib/auth/password";
+import { ensurePracticeFixture } from "./practice-fixture";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL belum diisi. Salin .env.example menjadi .env.");
@@ -103,6 +104,16 @@ async function main() {
       update: data,
       create: { testId: logikaTest1.id, urutan: i + 1, ...data },
     });
+  }
+
+  // Fixture lokal Practice hanya dibuat bila belum ada soal apa pun, termasuk DRAFT.
+  // Soal resmi yang sudah diisi tim tidak disentuh dan seed tetap aman diulang.
+  for (const category of categories) {
+    const practice = await db.test.findUniqueOrThrow({
+      where: { slug: `${category.slug}-practice` },
+      select: { id: true },
+    });
+    await ensurePracticeFixture(db, practice.id);
   }
 
   await seedDemoUsers();
