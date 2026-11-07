@@ -5,9 +5,9 @@ import { canAccessTest } from "@/lib/access/test-access-service";
 
 export const GET = withErrors(async (_request, context) => {
   const user = await requireUser();
-  const { id } = await context!.params;
+  const { slug } = await context!.params;
   const test = await db.test.findFirst({
-    where: { OR: [{ id }, { slug: id }], status: "AKTIF" },
+    where: { OR: [{ id: slug }, { slug }], status: "AKTIF" },
     select: { id: true, tipe: true },
   });
 

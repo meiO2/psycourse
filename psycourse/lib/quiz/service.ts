@@ -4,7 +4,7 @@ import type { TransactionClient } from "@/lib/generated/prisma/internal/prismaNa
 import { assertQuizAccess } from "./access";
 import { QuizError } from "./domain-errors";
 import { choicesOf, toPublicQuestion } from "./question-mapper";
-import { assertAttemptCanReceiveAnswer, isPastDeadline } from "./policy";
+import { assertAttemptCanReceiveAnswer, deadlineFor, finalizationStatus, isPastDeadline } from "./policy";
 import { calculateScore } from "./scoring";
 
 type TestWithQuestions = {
@@ -25,7 +25,7 @@ type TestWithQuestions = {
   }>;
 };
 
-type AttemptResult = {
+export type AttemptResult = {
   attemptId: string;
   status: AttemptStatus;
   skor: number;
@@ -72,7 +72,7 @@ async function lockAttempt(tx: TransactionClient, attemptId: string, userId?: st
   if (rows.length === 0) throw new QuizError("ATTEMPT_NOT_FOUND", 404, "Percobaan tidak ditemukan.");
 }
 
-async function finalizeLockedAttempt(
+export async function finalizeLockedAttempt(
   tx: TransactionClient,
   attemptId: string,
   status: AttemptStatus,
@@ -114,15 +114,6 @@ async function activeTest(slug: string): Promise<TestWithQuestions> {
   return test;
 }
 
-function deadlineFor(test: TestWithQuestions, startedAt: Date): Date | null {
-  if (test.tipe !== "TEST_2") return null;
-  const timerDetik = test.timerDetik;
-  if (timerDetik === null || !Number.isInteger(timerDetik) || timerDetik <= 0) {
-    throw new QuizError("TEST_NOT_FOUND", 409, "Konfigurasi waktu tes tidak valid.");
-  }
-  return new Date(startedAt.getTime() + timerDetik * 1000);
-}
-
 export async function getTest(slug: string) {
   const test = await activeTest(slug);
   return {
@@ -145,7 +136,7 @@ export async function startAttempt(userId: string, slug: string) {
       testId: test.id,
       status: AttemptStatus.BERLANGSUNG,
       mulaiPada,
-      deadlineAt: deadlineFor(test, mulaiPada),
+      deadlineAt: deadlineFor(test.tipe, test.timerDetik, mulaiPada),
       totalSoal: test.questions.length,
     },
   });
@@ -202,13 +193,13 @@ export async function getAttempt(userId: string, attemptId: string) {
 
 export async function saveAnswer(userId: string, attemptId: string, questionId: string, pilihan: number) {
   if (!Number.isInteger(pilihan)) throw new QuizError("INVALID_CHOICE", 400, "Pilihan jawaban tidak valid.");
-  return db.$transaction(async (tx) => {
+  const result = await db.$transaction(async (tx) => {
     await lockAttempt(tx, attemptId, userId);
     const attempt = await tx.attempt.findUniqueOrThrow({ where: { id: attemptId } });
     assertAttemptCanReceiveAnswer(attempt.status);
     if (isPastDeadline(attempt.deadlineAt, new Date())) {
       await finalizeLockedAttempt(tx, attemptId, AttemptStatus.KEDALUWARSA);
-      throw new QuizError("ATTEMPT_EXPIRED", 409, "Waktu tes sudah habis.");
+      return { expired: true as const };
     }
     const question = await tx.question.findFirst({
       where: { id: questionId, testId: attempt.testId, status: "AKTIF" },
@@ -224,6 +215,8 @@ export async function saveAnswer(userId: string, attemptId: string, questionId: 
     });
     return { saved: true, questionId, pilihan };
   });
+  if ("expired" in result) throw new QuizError("ATTEMPT_EXPIRED", 409, "Waktu tes sudah habis.");
+  return result;
 }
 
 export async function expireAttempt(userId: string, attemptId: string) {
@@ -241,10 +234,7 @@ export async function submitAttempt(userId: string, attemptId: string) {
     await lockAttempt(tx, attemptId, userId);
     const attempt = await tx.attempt.findUniqueOrThrow({ where: { id: attemptId } });
     if (attempt.status !== AttemptStatus.BERLANGSUNG) return resultOf(attempt);
-    const status =
-      isPastDeadline(attempt.deadlineAt, new Date())
-        ? AttemptStatus.KEDALUWARSA
-        : AttemptStatus.SELESAI;
+    const status = finalizationStatus(attempt.deadlineAt, new Date());
     return finalizeLockedAttempt(tx, attemptId, status);
   });
 }
