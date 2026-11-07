@@ -217,6 +217,7 @@ export const PaymentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   packageId: 'packageId',
+  testId: 'testId',
   orderId: 'orderId',
   jumlah: 'jumlah',
   metode: 'metode',
