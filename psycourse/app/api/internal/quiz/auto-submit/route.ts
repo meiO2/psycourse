@@ -2,8 +2,6 @@ import { createHash, timingSafeEqual } from "node:crypto";
 import { apiError, withErrors } from "@/lib/api";
 import { autoSubmitExpiredAttempts } from "@/lib/quiz/auto-submit";
 
-export const runtime = "nodejs";
-
 const MAX_BATCH_SIZE = 100;
 
 function matchesSecret(provided: string, expected: string): boolean {
