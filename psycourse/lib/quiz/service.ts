@@ -25,7 +25,7 @@ type TestWithQuestions = {
   }>;
 };
 
-type AttemptResult = {
+export type AttemptResult = {
   attemptId: string;
   status: AttemptStatus;
   skor: number;
@@ -72,7 +72,7 @@ async function lockAttempt(tx: TransactionClient, attemptId: string, userId?: st
   if (rows.length === 0) throw new QuizError("ATTEMPT_NOT_FOUND", 404, "Percobaan tidak ditemukan.");
 }
 
-async function finalizeLockedAttempt(
+export async function finalizeLockedAttempt(
   tx: TransactionClient,
   attemptId: string,
   status: AttemptStatus,
