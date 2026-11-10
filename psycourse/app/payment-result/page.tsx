@@ -80,7 +80,7 @@ function PaymentResultContent() {
       <main className="app-main">
         <div className="container" style={{ maxWidth: 760 }}>
           <PageIntro
-            eyebrow="STATUS PEMBAYARAN"
+            eyebrow="Info pembayaran"
             title={
               isPaid
                 ? "Pembayaran berhasil."

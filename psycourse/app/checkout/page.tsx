@@ -314,7 +314,7 @@ function CheckoutInner() {
       <main className="app-main">
         <div className="container">
           <PageIntro
-            eyebrow="CHECKOUT RESMI PSYCOURSE"
+            eyebrow="Selesaikan pembelianmu"
             title="Selesaikan Pembayaran."
             description="Pilih metode pembayaran aman yang didukung oleh Midtrans Sandbox."
           />
