@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { connection } from "next/server";
 import { ArrowRight, BookOpen, ClipboardCheck, CreditCard, Settings, History, LogOut, ChartNoAxesColumnIncreasing, ChevronRight } from "lucide-react";
-import { requireUser } from "@/lib/auth";
+import { requirePageUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { categories } from "@/lib/data";
 import SiteFooter from "@/components/SiteFooter";
@@ -14,7 +14,7 @@ export const instant = false;
 
 export default async function Dashboard() {
   await connection();
-  const user = await requireUser();
+  const user = await requirePageUser();
   const [attemptCount, activeEntitlements, latestAttempts] = await Promise.all([
     db.attempt.count({ where: { userId: user.id, status: { in: ["SELESAI", "KEDALUWARSA"] } } }),
     db.entitlement.findMany({ where: { userId: user.id, OR: [{ berakhir: null }, { berakhir: { gt: new Date() } }] }, include: { package: { select: { nama: true } } } }),

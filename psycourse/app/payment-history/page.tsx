@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { connection } from "next/server";
-import { requireUser } from "@/lib/auth";
+import { requirePageUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { formatRupiah } from "@/lib/data";
 import { PageIntro } from "@/components/UI";
@@ -10,7 +10,7 @@ export const instant = false;
 
 export default async function PaymentHistory() {
   await connection();
-  const user = await requireUser();
+  const user = await requirePageUser();
   const payments = await db.payment.findMany({
     where: { userId: user.id },
     include: { package: { select: { nama: true } } },

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { connection } from "next/server";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Clock, BookOpen, Brain, LockKeyhole, CheckCircle2 } from "lucide-react";
-import { requireUser } from "@/lib/auth";
+import { requirePageUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { categories } from "@/lib/data";
 import { Button, PageIntro } from "@/components/UI";
@@ -18,7 +18,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   const { slug } = await params;
   const category = categories.find((item) => item.slug === slug);
   if (!category) notFound();
-  const user = await requireUser();
+  const user = await requirePageUser();
   const [tests, entitlements] = await Promise.all([
     db.test.findMany({ where: { category: { slug }, status: "AKTIF" }, select: { id: true, slug: true, tipe: true } }),
     db.entitlement.findMany({ where: { userId: user.id, OR: [{ berakhir: null }, { berakhir: { gt: new Date() } }] }, select: { packageId: true, testId: true } }),

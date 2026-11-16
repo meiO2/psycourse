@@ -8,6 +8,7 @@
 // Tangkap dengan authErrorResponse(e) untuk menjadi respons 401/403 sesuai kontrak API.
 import "server-only";
 import { cache } from "react";
+import { redirect } from "next/navigation";
 import { getSessionUser, type SessionUser } from "./session";
 
 export { createSession, destroySession, destroyAllSessions, type SessionUser } from "./session";
@@ -46,4 +47,19 @@ export function authErrorResponse(error: unknown): Response {
     return Response.json({ error: { code: error.code, message: error.message } }, { status: error.status });
   }
   throw error;
+}
+
+// Versi untuk Server Component/halaman: pengguna tanpa sesi valid dialihkan ke /login
+// (bukan melempar error server). Dipakai di halaman, bukan di Route Handler.
+export async function requirePageUser(): Promise<SessionUser> {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+  return user;
+}
+
+// Untuk layout/halaman admin: tanpa sesi atau bukan ADMIN dialihkan ke /admin (login admin).
+export async function requirePageAdmin(): Promise<SessionUser> {
+  const user = await getCurrentUser();
+  if (!user || user.role !== "ADMIN") redirect("/admin");
+  return user;
 }

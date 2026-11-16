@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { connection } from "next/server";
-import { requireUser } from "@/lib/auth";
+import { requirePageUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { PageIntro } from "@/components/UI";
 
@@ -9,7 +9,7 @@ export const instant = false;
 
 export default async function History() {
   await connection();
-  const user = await requireUser();
+  const user = await requirePageUser();
   const attempts = await db.attempt.findMany({
     where: { userId: user.id, status: { in: ["SELESAI", "KEDALUWARSA"] } },
     include: { test: { include: { category: { select: { judul: true } } } } },
